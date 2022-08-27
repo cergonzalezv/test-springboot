@@ -20,7 +20,6 @@ import { ToastrModule } from 'ngx-toastr';
 import { AdminModule } from './admin/admin.module';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { AuthComponent } from './auth/auth.component';
-import { ComponentsModule } from './components/components.module';
 
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
@@ -54,8 +53,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
           deps: [HttpClient]
       }
     }),
-    AdminModule,
-    ComponentsModule
+    AdminModule
   ],
   providers: [
     {

@@ -32,7 +32,7 @@ export class AuthComponent implements OnInit {
     if(!form.valid){
       return;
     }
-    const email = form.value.email;
+    const user = form.value.user;
     const password = form.value.password;
     const name = "Ivan Gonzalez";
     const password_confirmation = form.value.password;
@@ -42,21 +42,21 @@ export class AuthComponent implements OnInit {
     this.fetching = true;
 
     if(this.isLoginMode){
-     authObs = this.authService.login(email, password);
+     authObs = this.authService.login(user, password);
     } else {
-     authObs = this.authService.signup(email, password, password_confirmation, name);
+     authObs = this.authService.signup(user, password, password_confirmation, name);
     }
 
     authObs.subscribe(
       resData => {
         console.log(resData);
         this.fetching = false;
-        this.router.navigate(['/inicio']);
+        this.router.navigate(['/']);
       },
       error => {
-        console.log(error)
+        console.log(error,'ERROR')
         this.error = 'Usuario o contraseña incorrectos'
-        this.toastr.error(this.error);
+        this.toastr.error(error.error.error);
         this.fetching = false;
       }
     );

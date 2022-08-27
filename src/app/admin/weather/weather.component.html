@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="col-12">
+    <div class="table-responsive">
+      <div *ngIf = "fetching" class="jumbotron text-center col-12">
+        <i style="color: blue;" class="p-2 fa fa-spinner animated faa-spin fa-4x"></i>
+      </div>
+      <div *ngIf = "!fetching"  class="">
+        <div class="jumbotron">
+          <h3>Latitud:{{returnedArray[0].lat}}</h3>
+          <h3>Longitud:{{returnedArray[0].lon}}</h3>
+          <h5>Presion: {{returnedArray[3].pressure}}</h5>
+          <h5>Humedad: {{returnedArray[3].humidity}}</h5>
+          <h5>Temperatura: {{returnedArray[3].temp}} / ({{returnedArray[3].temp_min}} : {{returnedArray[3].temp_max}})</h5>
+        </div>
+       
+      </div>
+    </div>
+  </div>
+</div>
+
+<br>
+<hr>
+<br>

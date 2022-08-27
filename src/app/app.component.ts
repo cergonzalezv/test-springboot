@@ -3,10 +3,8 @@ import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { BsDropdownConfig } from 'ngx-bootstrap/dropdown';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
-import { ThemeService } from './services/theme.service';
 import { AuthService } from './auth/auth.service';
 import { SwUpdate } from '@angular/service-worker';
-import { CardService } from './services/card.service';
 
 @Component({
   selector: 'app-root',
@@ -38,10 +36,8 @@ export class AppComponent implements OnInit, OnDestroy {
   firstBG: HTMLElement;
   secondBG: HTMLElement;
   constructor(private translate: TranslateService,
-              private themeService: ThemeService,
               private authService: AuthService,
               private swUpdate: SwUpdate,
-              private cardService: CardService
     ){
      this.firstBG = document.getElementById('firstBG') as HTMLElement;
      this.secondBG = document.getElementById('secondBG') as HTMLElement;
@@ -86,9 +82,7 @@ export class AppComponent implements OnInit, OnDestroy {
   //   if(this.isAuthenticated && this.profile.role > 1){
   //     this.hideAdministration = true
   //   }
-    this.fetchProducts();
-    this.fetchServices();
-    this.fetchEntrenamientos();
+
    // console.log(this.startList)
    // this.shoot();
   }
@@ -114,69 +108,24 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   // tslint:disable-next-line:typedef
-  selectTheme(event){
-    if (event.target.text === 'Dark' || event.target.text === 'Oscuro'){
-      this.themeService.setDarkTheme();
-    }
-    if (event.target.text === 'Blue' || event.target.text === 'Azul'){
-      this.themeService.setBlueTheme();
-    }
-    if (event.target.text === 'Ligth' || event.target.text === 'Blanco'){
-      this.themeService.setLightTheme();
-    }
-  }
+  // selectTheme(event){
+  //   if (event.target.text === 'Dark' || event.target.text === 'Oscuro'){
+  //     this.themeService.setDarkTheme();
+  //   }
+  //   if (event.target.text === 'Blue' || event.target.text === 'Azul'){
+  //     this.themeService.setBlueTheme();
+  //   }
+  //   if (event.target.text === 'Ligth' || event.target.text === 'Blanco'){
+  //     this.themeService.setLightTheme();
+  //   }
+  // }
 
   // tslint:disable-next-line:typedef
   onLogout(){
     this.authService.logout();
   }
 
-  // tslint:disable-next-line:typedef
-  fetchProducts(){
-    this.cardService.getCards(this.url).subscribe(data => {
-      Object.assign(this.startList, data);
-      // console.log(data)
-    }, error => {
-      console.log('productoRoot', error);
-    });
-  }
-
-  // tslint:disable-next-line:typedef
-  fetchServices(){
-    this.cardService.getCards(this.url2).subscribe(data => {
-      Object.assign(this.startList2, data);
-      // console.log(data)
-    }, error => {
-      console.log('servicioRoot', error);
-    });
-  }
-
-  // tslint:disable-next-line:typedef
-  fetchEntrenamientos(){
-      this.cardService.getCards(this.url3).subscribe(data => {
-        Object.assign(this.startList3, data);
-        // console.log(data)
-      }, error => {
-        console.log('entrenamientoRoot', error);
-      });
-    }
-
-  // tslint:disable-next-line:typedef
-  // shoot() {
-  //   try {
-  //       this.confetti({
-  //         angle: this.random(60, 120),
-  //         spread: this.random(20, 60),
-  //         particleCount: this.random(300, 400),
-  //         origin: {
-  //             y: 0.6
-  //         }
-  //     });
-  //   } catch (e) {
-  //       // noop, confettijs may not be loaded yet
-  //   }
-  // }
-
+  
   // tslint:disable-next-line:typedef
   random(min: number, max: number) {
       return Math.random() * (max - min) + min;

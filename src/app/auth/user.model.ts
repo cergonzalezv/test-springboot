@@ -1,10 +1,7 @@
 export class User {
-  constructor(private _token:string, private _token_validity:Date, public _role: Number){}
+  constructor(private _token:string){}
 
   get token(){
-    if(!this._token_validity || new Date() > this._token_validity){
-      return null;
-    }
     return this._token;
   }
 }

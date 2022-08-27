@@ -3,14 +3,11 @@
   <div class="col-12 col-md-6">
     <form action="" #authForm = "ngForm" (ngSubmit) = "onSubmit(authForm)" *ngIf = "!fetching">
       <div class="form-group">
-        <label for="email">E-Mail</label>
-        <input type="email" id="email" class="form-control" ngModel name="email" required email>
-        <div *ngIf="authForm.controls['email'].invalid && (authForm.controls['email'].dirty || authForm.controls['email'].touched)" class="alert alert-danger">
-            <div *ngIf="authForm.controls['email'].errors.required">
-              <p>El nombre es obligatorio</p>
-            </div>
-            <div *ngIf="authForm.controls['email'].errors.email">
-              <p>Tiene que escribir una dirección de correo válida</p>
+        <label for="user">User</label>
+        <input  id="user" class="form-control" ngModel name="user" required>
+        <div *ngIf="authForm.controls['user'].invalid && (authForm.controls['user'].dirty || authForm.controls['user'].touched)" class="alert alert-danger">
+            <div *ngIf="authForm.controls['user'].errors.required">
+              <p>Este campo  es obligatorio</p>
             </div>
         </div>
       </div>

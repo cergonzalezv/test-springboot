@@ -22,11 +22,11 @@ export class AuthService {
 
   constructor(private http:HttpClient, private router: Router) { }
 
-  signup(email:string, password:string, name: string, password_confirmation:string){
+  signup(user:string, password:string, name: string, password_confirmation:string){
     const dinamicUrl = "auth/register";
-   return this.http.post<AuthResponseData>(`${environment.API_DISAIC_URL}/${dinamicUrl}`,
+   return this.http.post<AuthResponseData>(`${environment.API_URL}/${dinamicUrl}`,
     {
-      email:email,
+      user:user,
       password:password,
       name:name,
       password_confirmation:password
@@ -38,14 +38,12 @@ export class AuthService {
     );
   }
 
-  login(email:string, password:string){
+  login(user:string, password:string){
     const dinamicUrl = "auth/login";
-   return this.http.post<AuthResponseData>(`${environment.API_DISAIC_URL}/${dinamicUrl}`,
-    {
-      email:email,
-      password:password
-    }
-    )
+    let formData = new FormData()
+    formData.append('name', user)
+    formData.append('pass', password)
+   return this.http.post<AuthResponseData>(`${environment.API_URL}/${dinamicUrl}`,formData)
     .pipe(tap(resData => {
       this.handleAuthentication(resData.token, +resData.token_validity, resData.role);
      })
@@ -55,25 +53,17 @@ export class AuthService {
   autoLogin(){
    const userData: {
      _token:string;
-     _token_validity:string;
-     _role:number
    } = JSON.parse(localStorage.getItem('userData'));
 
    if (!userData) {
      return;
    }
 
-   const loadedUser = new User(userData._token, new Date(userData._token_validity), userData._role);
+   const loadedUser = new User(userData._token);
 
    if(loadedUser.token){
      this.user.next(loadedUser);
-     if(loadedUser._role != 2){
-      this.canAdmin.next(loadedUser)
      }
-
-     const expirationDuration = new Date(userData._token_validity).getTime() - new Date().getTime();
-     this.autoLogout(expirationDuration);
-   }
   }
 
   logout(){
@@ -96,12 +86,8 @@ export class AuthService {
 
   private handleAuthentication(token: string, token_validity: number, role: number){
     const expirationDate = new Date(new Date().getTime() + +token_validity * 100);
-    const user = new User(token, expirationDate, role);
+    const user = new User(token);
     this.user.next(user);
-    if(user._role != 2){
-      this.canAdmin.next(user)
-     }
-    this.autoLogout(token_validity * 100);
     localStorage.setItem('userData', JSON.stringify(user));
   }
 }
